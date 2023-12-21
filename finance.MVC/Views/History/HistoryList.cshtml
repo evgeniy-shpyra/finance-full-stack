@@ -1,0 +1,96 @@
+﻿@using finance.MVC.Models
+@model finance.MVC.Models.HistoryListViewModel
+@{
+    ViewData["Title"] = "History";
+}
+
+<style>
+    td, th {
+        padding: 2px 10px;
+        text-align: center;
+    }
+</style>
+
+
+<div>
+    <h1>History</h1>
+
+    <div>
+        <form method="post" action="HistoryListByTransactionType">
+           
+            <table>
+                <tr>
+                    <td>
+                        <select name="typeId">
+                            <option value="-1">All</option>
+                            @foreach (var item in @Model.TransactionTypeViews)
+                            {
+                                <option value="@item.TransactionTypeViewsId">@Html.DisplayFor(modelItem => item.Name)</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input type="submit" value="Filter" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <form method="post" action="HistoryListByCategory">
+            <table>
+                <tr>
+                    <td>
+                        <select name="categoryId">
+                            <option value="-1">All</option>
+                            @foreach (var item in @Model.FinancialCategoryViews)
+                            {
+                                <option value="@item.FinancialCategoryId">@Html.DisplayFor(modelItem => item.Name)</option>
+                            }
+                        </select>
+                    </td>
+                    <td><input type="submit" value="Filter" /> </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Receiving Wallet</th>
+                <th>Sending Wallet</th>
+                <th>Transaction Type</th>
+                <th>LeftBalance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model.HistoryViews)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HistoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeftBalance)
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br/>
+</div>
+
+<script>
+
+
+</script>

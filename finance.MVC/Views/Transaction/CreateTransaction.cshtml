@@ -1,0 +1,81 @@
+﻿@using finance.MVC.Models
+@model finance.MVC.Models.TransactionViewModel
+@{
+    ViewData["Title"] = "Transaction";
+}
+
+
+
+<form method="post" action="CreateTransaction">
+    <table id="transaction-table">
+        <tr>
+            <td class="field-name">Transaction type:</td>
+            <td>
+               <select name="transactionType">
+                    @for (int index = 0; index < Model.TransactionTypeViews.Count; index++)
+                    {
+                        var item = Model.TransactionTypeViews[index];
+                        var isSelected = index == 0;
+                        <option value="@item.TransactionTypeViewsId" selected="@isSelected">@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr id="sending-wallet-row">
+            <td class="field-name">Sending wallet:</td>
+            <td>
+                <select name="sendingWallet">
+                    <option value="-1">No select</option>
+                    @foreach (var item in @Model.WalletsViews){
+                        <option value="@item.WalletId" >@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr id="receiving-wallet-row">
+            <td class="field-name">Receiving wallet:</td>
+            <td>
+                <select name="receivingWallet">
+                    <option value="-1">No select</option>
+                    @foreach (var item in @Model.WalletsViews)
+                    {
+                        <option value="@item.WalletId">@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr id="category-row">
+            <td class="field-name">Financial category:</td>
+            <td>
+                <select name="financialCategory">
+                    <option value="-1">No select</option>
+                    @foreach (var item in @Model.FinancialCategoryViews)
+                    {
+                        <option value="@item.FinancialCategoryId">@Html.DisplayFor(modelItem => item.Name)</option>
+                    }
+                </select>
+            </td>
+        </t>
+        <tr>
+            <td class="field-name">Price:</td>
+            <td>
+               <input type="number" name="price" value="0"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Create</button>
+            </td>
+        </tr>
+    </table>
+    @if (ViewBag.Success != null)
+    {
+        <h3>@ViewBag.Success</h3>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <h3>Error: @ViewBag.Error</h3>
+    }
+</form>
+
+

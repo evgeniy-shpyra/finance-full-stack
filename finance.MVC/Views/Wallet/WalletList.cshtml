@@ -1,0 +1,51 @@
+﻿@using finance.MVC.Models
+@model IEnumerable<finance.MVC.Models.WalletViews>
+@{
+    ViewData["Title"] = "Wallet";
+}
+
+<style>
+    td, th {
+        padding: 2px 10px;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <h1>Wallets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WalletId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        @Html.ActionLink("X", "DeleteWallet", new {walletId = item.WalletId})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br/>
+    @Html.ActionLink("Create new wallet", "CreateWallet") 
+</div>
+
+<script>
+
+
+</script>
