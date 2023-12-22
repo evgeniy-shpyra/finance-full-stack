@@ -143,7 +143,7 @@ namespace finance.bll.Services
             history.LeftBalance = leftBalance;
             history.TransactionTypeId = newTransaction.TransactionTypeId;
             history.TransactionType = newTransaction.TransactionType;
-
+            history.Price = newTransaction.Price;
             history.CategoryName = newTransaction.FinancialCategory.Name;
 
 

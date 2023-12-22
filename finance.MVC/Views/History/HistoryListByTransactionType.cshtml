@@ -20,10 +20,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Financial Categorie</th>
                 <th>Receiving Wallet</th>
                 <th>Sending Wallet</th>
-                <th>Transaction Type</th>
+                <th>Category</th>
+                <th>Price</th>
                 <th>LeftBalance</th>
             </tr>
         </thead>
@@ -44,7 +44,10 @@
                             @Html.DisplayFor(modelItem => item.WalletFrom)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TransactionType.Name)
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.LeftBalance)

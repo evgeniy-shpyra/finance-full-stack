@@ -18,7 +18,8 @@ namespace finance.MVC.Models
 
         public static IMapper HistoryToHistoryViewsMapper = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<HistoryDTO, HistoryViews>().ForMember(dest => dest.HistoryId, opt => opt.MapFrom(src => src.Id));
+            cfg.CreateMap<HistoryDTO, HistoryViews>().ForMember(dest => dest.HistoryId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
 
         }).CreateMapper();
 
