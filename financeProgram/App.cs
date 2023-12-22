@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using finance.BLL.ModelsDTO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace financeProgram
 {
@@ -14,7 +15,7 @@ namespace financeProgram
         private readonly IHistoryService historyService;
         private readonly ITransactionService transactionService;
 
-        //public App(IWalletService walletService, IFinancialCategoryService categoryService, IHistoryService historyService, ITransactionService transactionService)
+
         public App(IWalletService walletService, IFinancialCategoryService categoryService, IHistoryService historyService, ITransactionService transactionService)
         {
             this.walletService = walletService;
@@ -306,27 +307,26 @@ namespace financeProgram
         {
             void printTransaction(List<HistoryDTO> historyes)
             {
-              
 
                 foreach (HistoryDTO his in historyes)
                 {
+                    
 
+                    if (his.WalletTo.Length != 0 && his.WalletFrom.Length != 0)
+                    {
+                        Console.WriteLine($"Type: transaction between wallets\nSending wallet: {his.WalletFrom}\nReceiving wallet: {his.WalletTo}\nFinancial category: {his.Category}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
+                    }
+                    else if (his.WalletTo.Length != 0)
+                    {
 
-                    if (his.WalletTo != null && his.WalletFrom != null)
-                    {
-                        Console.WriteLine($"Type: transaction between wallets\nSending wallet: {his.WalletFrom}\nReceiving wallet: {his.WalletTo}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
+                        Console.WriteLine($"Type: balance replenishment\nReceiving wallet: {his.WalletTo}\nFinancial category: {his.Category}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
                     }
-                    else if (his.WalletTo != null)
+                    else if (his.WalletFrom.Length != 0)
                     {
-                        Console.WriteLine($"Type: balance replenishment\nReceiving wallet: {his.WalletFrom}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
-                    }
-                    else if (his.WalletFrom != null)
-                    {
-                        Console.WriteLine($"Type: withdrawal of funds\nSending wallet: {his.WalletTo}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
+                        Console.WriteLine($"Type: withdrawal of funds\nSending wallet: {his.WalletFrom}\nFinancial category: {his.Category}\nAmount: {his.Price}\nLeft balance: {his.LeftBalance}\nTime: {his.CreateAt}\n");
                     }
                 }
 
-            
             }
 
             Console.Clear();
@@ -361,10 +361,10 @@ namespace financeProgram
 
                     case 2:
 
-                        FinancialCategoryDTO sysyemCategory = categoryService.GetById(1);
+                      
                         var allCategories = categoryService.GetAll().ToList();
 
-                        allCategories.Insert(0, sysyemCategory);
+                     
 
                         List<string> categoryOptions = new List<string> { };
 
@@ -527,11 +527,7 @@ namespace financeProgram
                     Console.Clear();
                     if (selectedWallet.Balance >= money)
                     {
-                        CreateTransactionDTO transaction = new CreateTransactionDTO();
-                        transaction.Price = money;
-                      //  transaction.FinancialCategory = selectedCategory;
-                      //  transaction.SendingWallet = selectedWallet;
-                      //  transaction.ReceivingWallet = null;
+                        CreateTransactionDTO transaction = new CreateTransactionDTO { Price = money, FinancialCategoryId = selectedCategory.Id, SendingWalletId = selectedWallet.Id };
 
                         transactionService.Add(transaction);
 
@@ -600,11 +596,7 @@ namespace financeProgram
                     Console.Clear();
                     if (sendingWallet.Balance >= money)
                     {
-                        CreateTransactionDTO transaction = new CreateTransactionDTO();
-                        transaction.Price = money;
-
-                       // transaction.SendingWallet = sendingWallet;
-                        //transaction.ReceivingWallet = receivingWallet;
+                        CreateTransactionDTO transaction = new CreateTransactionDTO { Price = money, SendingWalletId = sendingWallet.Id, ReceivingWalletId = receivingWallet.Id };
 
                         transactionService.Add(transaction);
 
@@ -697,11 +689,7 @@ namespace financeProgram
                 if (decimal.TryParse(enter, out decimal money))
                 {
 
-                    CreateTransactionDTO transaction = new CreateTransactionDTO();
-                   // transaction.FinancialCategory = selectedCategory;
-                    transaction.ReceivingWalletId = selectedWallet.Id;
-                   // transaction.SendingWalletId = null;
-                    transaction.Price = money;
+                    CreateTransactionDTO transaction = new CreateTransactionDTO { Price = money, FinancialCategoryId = selectedCategory.Id, ReceivingWalletId = selectedWallet.Id };
 
                     transactionService.Add(transaction);
 
