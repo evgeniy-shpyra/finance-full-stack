@@ -1,6 +1,8 @@
-﻿using finance.BLL.ModelsDTO;
+﻿using finance.bll.Services;
+using finance.BLL.ModelsDTO;
 using finance.BLL.Services.Interfaces;
 using finance.DLL.Models;
+using finance.WebAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace finance.WebAPI.Controllers
@@ -10,34 +12,32 @@ namespace finance.WebAPI.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService transactionService;
-        private readonly IWalletService walletService;
 
-        public TransactionController(ITransactionService transactionService, IWalletService walletService)
+        public TransactionController(ITransactionService transactionService)
         {
             this.transactionService = transactionService;
-            this.walletService = walletService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Transaction>> GetAllTransactions()
+        public ActionResult<IEnumerable<TransactionViewsDTO>> GetAllTransactions()
         {
-            var transactions = transactionService.GetAll();
+            var transactions = Mapper.TransactionDTOTransactionViews.Map<List<TransactionDTO>, List<TransactionViewsDTO>>(transactionService.GetAll());
             return Ok(transactions);
         }
 
         [HttpGet("type")]
-        public ActionResult<TransactionDTO> GetAllTransactionTypes()
+        public ActionResult<IEnumerable<TransactionTypeViewsDTO>> GetAllTransactionTypes()
         {
-            var transaction = transactionService.GetAllTypes();
-
+         
+            var transaction = Mapper.TransactionTypeDTOTransactionTypeViews.Map<List<TransactionTypeDTO>, List<TransactionTypeViewsDTO>>(transactionService.GetAllTypes());
 
             return Ok(transaction);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TransactionDTO> GetTransaction(int id)
+        public ActionResult<TransactionViewsDTO> GetTransaction(int id)
         {
-            var transaction = transactionService.GetById(id);
+            var transaction = Mapper.TransactionDTOTransactionViews.Map<TransactionDTO, TransactionViewsDTO>(transactionService.GetById(id));
 
             if (transaction == null)
             {
@@ -48,11 +48,12 @@ namespace finance.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTransaction(CreateTransactionDTO transaction)
+        public IActionResult CreateTransaction(CreateTransactionViewsDTO transaction)
         {
             try
             {
-                transactionService.Add(transaction);
+                var newTransaction = Mapper.CreateTransactionViewsCreateTransaction.Map<CreateTransactionViewsDTO, CreateTransactionDTO>(transaction);
+                transactionService.Add(newTransaction);
                 return Ok(transaction);
             }
             catch (Exception ex)

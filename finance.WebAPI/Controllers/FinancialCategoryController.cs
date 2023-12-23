@@ -1,6 +1,7 @@
 ﻿using finance.BLL.ModelsDTO;
 using finance.BLL.Services.Interfaces;
 using finance.DLL.Models;
+using finance.WebAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace finance.WebAPI.Controllers
@@ -17,19 +18,18 @@ namespace finance.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<FinancialCategoryDTO>> GetAllFinancialCategories()
+        public ActionResult<List<FinancialCategoryViewsDTO>> GetAllFinancialCategories()
         {
-          
-            var financialCategories = financialCategoryService.GetAll();
-
+            var financialCategories = Mapper.CategoryDTOCategoryViews.Map<List<FinancialCategoryDTO>, List<FinancialCategoryViewsDTO>>(financialCategoryService.GetAll());
           
             return Ok(financialCategories);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<FinancialCategoryDTO> GetFinancialCategory(int id)
+        public ActionResult<FinancialCategoryViewsDTO> GetFinancialCategory(int id)
         {
-            var financialCategory = financialCategoryService.GetById(id);
+         
+            var financialCategory = Mapper.CategoryDTOCategoryViews.Map<FinancialCategoryDTO, FinancialCategoryViewsDTO>(financialCategoryService.GetById(id));
 
             if (financialCategory == null)
             {
@@ -40,9 +40,11 @@ namespace finance.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateFinancialCategory(CreateFinancialCategoryDTO financialCategory)
+        public IActionResult CreateFinancialCategory(CreateFinancialCategoryViewsDTO financialCategory)
         {
-            financialCategoryService.Add(financialCategory);
+            var newCategory = Mapper.CreateCategoryViewsCreateCategory.Map<CreateFinancialCategoryViewsDTO, CreateFinancialCategoryDTO>(financialCategory);
+
+            financialCategoryService.Add(newCategory);
             return Ok(financialCategory);
         }
 
