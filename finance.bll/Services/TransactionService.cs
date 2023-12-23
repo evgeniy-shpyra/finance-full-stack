@@ -77,7 +77,7 @@ namespace finance.bll.Services
                 newTransaction.FinancialCategoryId = category.Id;
             }
 
-            History history = new History();
+            History history = new History{ Price = newTransaction.Price };
 
             var transactionTypes = unitOfWork
                 .TransactionTypeRepository
@@ -143,7 +143,7 @@ namespace finance.bll.Services
             history.LeftBalance = leftBalance;
             history.TransactionTypeId = newTransaction.TransactionTypeId;
             history.TransactionType = newTransaction.TransactionType;
-            history.Price = newTransaction.Price;
+
             history.CategoryName = newTransaction.FinancialCategory.Name;
 
 
