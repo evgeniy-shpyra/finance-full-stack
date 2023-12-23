@@ -77,7 +77,7 @@ namespace finance.bll.Services
                 newTransaction.FinancialCategoryId = category.Id;
             }
 
-            History history = new History();
+            History history = new History{ Price = newTransaction.Price };
 
             var transactionTypes = unitOfWork
                 .TransactionTypeRepository
