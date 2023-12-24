@@ -12,15 +12,7 @@ namespace finance.DLL.Repository
 
         public override IEnumerable<History> GetAll()
         {
-            /*
-            return db.Set<History>()
-                .Include(gs => gs.Transaction)
-                    .ThenInclude(t => t.SendingWallet)
-                .Include(gs => gs.Transaction)
-                    .ThenInclude(t => t.ReceivingWallet)
-                .AsNoTracking();
-            */
-
+         
             return db.Set<History>()
                 .Include(gs => gs.TransactionType)
                  .AsNoTracking();

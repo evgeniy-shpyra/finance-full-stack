@@ -15,10 +15,6 @@ namespace finance.DLL.Models
         public int TransactionTypeId { get; set; }
         public TransactionType TransactionType { get; set; }
 
-        /*
-        public int TransactionId { get; set; }
-        public Transaction Transaction { get; set; }
-        */
         public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }

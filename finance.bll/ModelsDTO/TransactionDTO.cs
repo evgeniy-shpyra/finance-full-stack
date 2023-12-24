@@ -18,6 +18,5 @@ namespace finance.BLL.ModelsDTO
         public FinancialCategoryDTO FinancialCategory { get; set; } 
         public TransactionTypeDTO TransactionType { get; set; }
 
-        public History HistoryRecord { get; set; }
     }
 }

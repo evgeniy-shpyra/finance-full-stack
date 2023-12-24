@@ -14,7 +14,27 @@ namespace finance.DLL
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public FinanceContext(DbContextOptions<FinanceContext> options) : base(options)
         {
+           
+            Database.EnsureCreated();
 
+            if (!FinancialCategories.Any())
+            {
+                var systemCategory = new FinancialCategory { Name = "Transaction between wallet" };
+                FinancialCategories.Add(systemCategory);
+
+                var replenishmentTransactionType = new TransactionType { Name = "replenishment" };
+                var betweenWalletsTransactionType = new TransactionType { Name = "between wallets" };
+                var withdrawalType = new TransactionType { Name = "withdrawal" };
+                TransactionTypes.AddRange(replenishmentTransactionType, betweenWalletsTransactionType, withdrawalType);
+
+                var systemSendingWallet = new Wallet { Name = "systemSendingWallet" };
+                var systemReceivingWallet = new Wallet { Name = "systemReceivingWallet" };
+
+                Wallets.AddRange(systemSendingWallet, systemReceivingWallet);
+
+                SaveChanges();
+            }
+         
             
         }
 

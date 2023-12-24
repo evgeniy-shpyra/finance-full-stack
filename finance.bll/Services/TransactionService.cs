@@ -71,13 +71,13 @@ namespace finance.bll.Services
                 var category = unitOfWork.FinancialCategoryRepository.Get((int)transaction.FinancialCategoryId);
                 if (category == null)
                 {
-                    throw new Exception($"Wallet with id {transaction.ReceivingWalletId} dosn't exist");
+                    throw new Exception($"Financial Category with id {transaction.FinancialCategoryId} dosn't exist");
                 }
                 newTransaction.FinancialCategory = category;
                 newTransaction.FinancialCategoryId = category.Id;
             }
 
-            History history = new History();
+            History history = new History{ Price = newTransaction.Price };
 
             var transactionTypes = unitOfWork
                 .TransactionTypeRepository

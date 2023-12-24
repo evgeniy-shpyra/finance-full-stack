@@ -1,0 +1,48 @@
+﻿@using finance.MVC.Models
+@model IEnumerable<finance.MVC.Models.FinancialCategoryViews>
+@{
+    ViewData["Title"] = "Financial Categories";
+}
+
+<style>
+    td, th {
+        padding: 2px 10px;
+        text-align: center;
+    }
+</style>
+
+
+<div>
+    <h1>FinancialCategory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinancialCategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("X", "DeleteFinancialCategory", new {categoryId = item.FinancialCategoryId})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br/>
+    @Html.ActionLink("Create new category", "CreateFinancialCategory")
+</div>
+
+<script>
+
+
+</script>       

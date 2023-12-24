@@ -13,7 +13,6 @@ namespace finance.BLL.Common.Mappings
             CreateMap<FinancialCategory, FinancialCategoryDTO>();
             CreateMap<HistoryDTO, History>();
             CreateMap<History, HistoryDTO>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
                 .ForMember(dest => dest.WalletFrom, opt => opt.MapFrom(src => src.WalletFromName))
                 .ForMember(dest => dest.WalletTo, opt => opt.MapFrom(src => src.WalletToName))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.CategoryName));

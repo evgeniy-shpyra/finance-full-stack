@@ -1,0 +1,14 @@
+﻿<form method="post" action="CreateFinancialCategory">
+    <h3>@ViewBag.Error</h3>
+    <table class="table-create">
+        <tr>
+            <td class="field-name">Category name:</td>
+            <td><input type="text" name="name" /> </td>
+        </tr>
+        <tr>
+            <td><button type="submit">Create</button></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+@Html.ActionLink("Back", "FinancialCategoryList")

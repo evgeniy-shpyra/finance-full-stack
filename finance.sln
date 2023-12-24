@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "finance.MVC", "finance.MVC\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "finance.WebAPI", "finance.WebAPI\finance.WebAPI.csproj", "{D89EDEC4-5F1D-43BC-9994-BA649459031D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "finance.WebAPI.Client", "finance.WebAPI.Client\finance.WebAPI.Client.csproj", "{8CEC2C48-191C-4968-A95E-4ECC3F5E0AFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{D89EDEC4-5F1D-43BC-9994-BA649459031D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D89EDEC4-5F1D-43BC-9994-BA649459031D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D89EDEC4-5F1D-43BC-9994-BA649459031D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CEC2C48-191C-4968-A95E-4ECC3F5E0AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CEC2C48-191C-4968-A95E-4ECC3F5E0AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CEC2C48-191C-4968-A95E-4ECC3F5E0AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CEC2C48-191C-4968-A95E-4ECC3F5E0AFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
