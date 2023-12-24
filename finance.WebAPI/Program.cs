@@ -7,6 +7,7 @@ using finance.DLL.Models;
 using finance.DLL.Repository;
 using finance.DLL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace finance.WebAPI
 {
@@ -38,6 +39,13 @@ namespace finance.WebAPI
             builder.Services.AddScoped<IFinancialCategoryService, FinancialCategoryService>();
             builder.Services.AddScoped<IHistoryService, HistoryService>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin()
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader());
+            });
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -54,9 +62,13 @@ namespace finance.WebAPI
                 app.UseSwaggerUI();
             }
 
+
+
+            app.UseCors("AllowAllOrigins");
+
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+     
 
 
             app.MapControllers();
